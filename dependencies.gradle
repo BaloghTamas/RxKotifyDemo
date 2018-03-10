@@ -1,30 +1,31 @@
 buildscript {
     ext {
-        kotlin_version = '1.1.2-3'
-        android_plugin_version = '2.3.2'
+        kotlin_version = '1.2.30'
+        android_plugin_version = '3.0.1'
 
         pluginDependencies = [
                 android: "com.android.tools.build:gradle:$android_plugin_version",
-                kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+                kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version",
+                kotlin_android_extensions : "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
         ]
     }
 }
 
 
 ext {
-    dagger_version = '2.10'
-    support_version = '25.3.1'
-    okhttp_version = '3.8.0'
+    dagger_version = '2.11'
+    support_version = '27.1.0'
+    okhttp_version = '3.10.0'
     retrofit_version = '2.3.0'
-    gson_version = "2.8.0"
-    glide_version = "3.8.0"
-    eventbus_version = "3.0.0"
+    gson_version = "2.8.2"
+    glide_version = "4.6.1"
+    eventbus_version = "3.1.1"
 
-    test_support_version = '0.5'
+    test_support_version = '1.0.2-alpha1'
     junit_version = "4.12"
-    mockito_version = "2.8.9"
-    espresso_version = "2.2.2"
-    robolectric_version = "3.3.2"
+    mockito_version = "2.15.0"
+    espresso_version = "3.0.2-alpha1"
+    robolectric_version = "3.7.1"
 
     kotlinDependencies = [
             stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -58,7 +59,6 @@ ext {
     unitTestDependencies = [
             junit             : "junit:junit:$junit_version",
             robolectric       : "org.robolectric:robolectric:$robolectric_version",
-            robolectricShadows: "org.robolectric:shadows-support-v4:$robolectric_version",
             mockito           : "org.mockito:mockito-core:$mockito_version",
     ]
 

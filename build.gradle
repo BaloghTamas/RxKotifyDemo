@@ -1,20 +1,23 @@
 buildscript {
     apply from: 'dependencies.gradle'
     repositories {
-        jcenter()
+        google()
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath pluginDependencies.android
         classpath pluginDependencies.kotlin
+        classpath pluginDependencies.kotlin_android_extensions
     }
 }
 
 
 allprojects {
     repositories {
-        jcenter()
+        google()
         mavenCentral()
+        jcenter()
     }
 }
 

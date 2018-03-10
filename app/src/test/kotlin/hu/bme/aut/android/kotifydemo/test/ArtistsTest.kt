@@ -5,7 +5,6 @@ import hu.bme.aut.android.kotifydemo.model.Item
 import hu.bme.aut.android.kotifydemo.setTestInjector
 import hu.bme.aut.android.kotifydemo.ui.artists.ArtistsPresenter
 import hu.bme.aut.android.kotifydemo.ui.artists.ArtistsScreen
-import hu.bme.aut.android.kotifydemo.utils.RobolectricDaggerTestRunner
 import hu.bme.aut.android.kotifydemo.utils.argumentCaptor
 import hu.bme.aut.android.kotifydemo.utils.mock
 import junit.framework.Assert.assertTrue
@@ -14,10 +13,11 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.verify
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricDaggerTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(21))
+@RunWith(RobolectricTestRunner::class)
+@Config(constants = BuildConfig::class)
 class ArtistsTest {
 
     private lateinit var artistsPresenter: ArtistsPresenter

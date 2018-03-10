@@ -27,10 +27,11 @@ class ArtistsFragment : Fragment(), ArtistsScreen {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        artist = arguments.getString(KEY_ARTIST)
+        artist = arguments?.getString(KEY_ARTIST) ?: ""
+
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
         artistsPresenter.attachScreen(this)
@@ -61,14 +62,14 @@ class ArtistsFragment : Fragment(), ArtistsScreen {
         return inflater.inflate(R.layout.fragment_artists, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         etArtist.setText(artist)
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerViewArtists.layoutManager = llm
 
-        artistsAdapter = ArtistsAdapter(context, artistsList)
+        artistsAdapter = ArtistsAdapter(context!!, artistsList)
         recyclerViewArtists.adapter = artistsAdapter
 
         swipeRefreshLayoutArtists.setOnRefreshListener {
@@ -102,6 +103,6 @@ class ArtistsFragment : Fragment(), ArtistsScreen {
 
     override fun showNetworkError(errorMsg: String) {
         swipeRefreshLayoutArtists.isRefreshing = false
-        activity.showLongToast(errorMsg)
+        activity?.showLongToast(errorMsg)
     }
 }

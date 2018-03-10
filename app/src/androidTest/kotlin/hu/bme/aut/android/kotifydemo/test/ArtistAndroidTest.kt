@@ -16,7 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ArtistTest : EspressoTest<ArtistsActivity>(ArtistsActivity::class.java) {
+class ArtistAndroidTest : EspressoTest<ArtistsActivity>(ArtistsActivity::class.java) {
 
     val ARTIST = "AC/DC"
 
