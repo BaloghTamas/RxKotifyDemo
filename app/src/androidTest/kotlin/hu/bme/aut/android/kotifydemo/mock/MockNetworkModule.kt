@@ -11,8 +11,6 @@ import javax.inject.Singleton
 
 @Module
 class MockNetworkModule {
-
-
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -23,10 +21,9 @@ class MockNetworkModule {
 
     @Provides
     @Singleton
-    fun provideArtistsApi(client: OkHttpClient): ArtistsApi = MockArtistApi()
+    fun provideArtistsApi(): ArtistsApi = MockArtistApi()
 
     @Provides
     @Singleton
-    fun provideTokenApi(client: OkHttpClient): TokenApi = MockTokenApi()
-
+    fun provideTokenApi(): TokenApi = MockTokenApi()
 }

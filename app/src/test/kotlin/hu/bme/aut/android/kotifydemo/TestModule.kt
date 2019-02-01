@@ -3,7 +3,7 @@ package hu.bme.aut.android.kotifydemo
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import hu.bme.aut.android.kotifydemo.di.Network
+import hu.bme.aut.android.kotifydemo.interactor.artists.ArtistsInteractor
 import hu.bme.aut.android.kotifydemo.ui.artists.ArtistsPresenter
 import hu.bme.aut.android.kotifydemo.ui.main.MainPresenter
 import hu.bme.aut.android.kotifydemo.utils.UiExecutor
@@ -22,10 +22,9 @@ class TestModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideArtistsPresenter() = ArtistsPresenter()
+    fun provideArtistsPresenter(executor: Executor, artistsInteractor: ArtistsInteractor) = ArtistsPresenter(executor, artistsInteractor)
 
     @Provides
     @Singleton
-    @Network
     fun provideNetworkExecutor(): Executor = UiExecutor()
 }

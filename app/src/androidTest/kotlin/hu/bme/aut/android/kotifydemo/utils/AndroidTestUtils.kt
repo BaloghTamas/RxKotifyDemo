@@ -1,7 +1,9 @@
 package hu.bme.aut.android.kotifydemo.utils
 
 import android.support.test.InstrumentationRegistry
-import hu.bme.aut.android.kotifydemo.*
+import hu.bme.aut.android.kotifydemo.AndroidTestModule
+import hu.bme.aut.android.kotifydemo.DaggerKotifyDemoApplicationComponent
+import hu.bme.aut.android.kotifydemo.KotifyDemoApplication
 import hu.bme.aut.android.kotifydemo.ui.UIModule
 
 object AndroidTestUtils {
@@ -11,7 +13,7 @@ object AndroidTestUtils {
         val app = instrumentation.targetContext.applicationContext as KotifyDemoApplication
 
         val androidTestComponent = DaggerAndroidTestComponent.builder().androidTestModule(AndroidTestModule(app)).build()
-        injector = androidTestComponent
+        app.injector = androidTestComponent
     }
 
     fun setProdutionInjector() {
@@ -19,6 +21,6 @@ object AndroidTestUtils {
         val app = instrumentation.targetContext.applicationContext as KotifyDemoApplication
 
         val androidTestComponent = DaggerKotifyDemoApplicationComponent.builder().uIModule(UIModule(app)).build()
-        injector = androidTestComponent
+        app.injector = androidTestComponent
     }
 }

@@ -1,7 +1,6 @@
 package hu.bme.aut.android.kotifydemo.test
 
-import hu.bme.aut.android.kotifydemo.BuildConfig
-import hu.bme.aut.android.kotifydemo.setTestInjector
+import hu.bme.aut.android.kotifydemo.testInjector
 import hu.bme.aut.android.kotifydemo.ui.main.MainPresenter
 import hu.bme.aut.android.kotifydemo.ui.main.MainScreen
 import hu.bme.aut.android.kotifydemo.utils.mock
@@ -11,33 +10,31 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.verify
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
+import javax.inject.Inject
 
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class)
 class MainTest {
-
-    private lateinit var mainPresenter: MainPresenter
+    @Inject
+    lateinit var mainPresenter: MainPresenter
     private lateinit var mainScreen: MainScreen
 
-
     @Throws(Exception::class)
-    @Before fun setup() {
-        setTestInjector()
+    @Before
+    fun setup() {
+        testInjector.inject(this)
         mainScreen = mock()
-        mainPresenter = MainPresenter()
         mainPresenter.attachScreen(mainScreen)
     }
 
-    @Test fun testSearch() {
+    @Test
+    fun testSearch() {
         val artist = "AC/DC"
         mainPresenter.showArtistsSearchList(artist)
         verify(mainScreen).showArtists(artist)
     }
 
-
-    @After fun tearDown() {
+    @After
+    fun tearDown() {
         mainPresenter.detachScreen()
     }
-
 }

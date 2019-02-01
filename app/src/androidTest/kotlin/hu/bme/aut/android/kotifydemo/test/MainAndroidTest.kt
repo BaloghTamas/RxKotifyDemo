@@ -17,18 +17,22 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MainAndroidTest : EspressoTest<MainActivity>(MainActivity::class.java) {
 
-    val ARTIST = "AC/DC"
-    val ARTIST_ACTIVITY_TITLE = "ArtistsActivity"
-
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         setTestInjector()
         activityRule.launchActivity(Intent())
     }
 
-    @Test fun testNavigateToArtistActivity() {
+    @Test
+    fun testNavigateToArtistActivity() {
         onView(withId(R.id.etArtist)).perform(typeText(ARTIST), closeSoftKeyboard())
         onView(withId(R.id.btnShowArtists)).perform(click())
         matchToolbarTitle(ARTIST_ACTIVITY_TITLE)
+    }
+
+    companion object {
+        private const val ARTIST = "AC/DC"
+        private const val ARTIST_ACTIVITY_TITLE = "ArtistsActivity"
     }
 
 

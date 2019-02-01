@@ -14,7 +14,7 @@ import java.io.IOException
 import java.util.*
 
 class MockArtistApi : ArtistsApi {
-    override fun getArtists(auth: String, @Query("query") artist: String, @Query("type") type: String, @Query("offset") offset: Int, @Query("limit") limit: Int): Call<ArtistsResult> {
+    override fun getArtists(authorisation: String, @Query("query") artist: String, @Query("type") type: String, @Query("offset") offset: Int, @Query("limit") limit: Int): Call<ArtistsResult> {
         val artistsResult = ArtistsResult()
         val artists = Artists()
 

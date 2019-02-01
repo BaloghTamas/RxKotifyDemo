@@ -3,6 +3,7 @@ package hu.bme.aut.android.kotifydemo.utils
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.IdlingResource
 
+@Suppress("DEPRECATION")
 class ElapsedTimeIdlingResource(private val waitingTime: Long) : IdlingResource {
     private val startTime: Long
     private var resourceCallback: IdlingResource.ResourceCallback? = null
@@ -34,19 +35,14 @@ class ElapsedTimeIdlingResource(private val waitingTime: Long) : IdlingResource 
     }
 
     companion object {
-        val WAITING_TIME: Long = 500
 
-
-        fun waitFor(time: Long, body: () -> Unit) {
-            val idlingResource = ElapsedTimeIdlingResource(WAITING_TIME)
+        fun waitFor(time: Long = 500, body: () -> Unit) {
+            val idlingResource = ElapsedTimeIdlingResource(time)
             Espresso.registerIdlingResources(idlingResource)
-            body.invoke();
+            body.invoke()
             Espresso.unregisterIdlingResources(idlingResource)
         }
 
 
-        fun waitFor(body: () -> Unit) {
-            waitFor(WAITING_TIME, body)
-        }
     }
 }

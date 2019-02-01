@@ -6,5 +6,5 @@ import hu.bme.aut.android.kotifydemo.mock.MockNetworkModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(MockNetworkModule::class, AndroidTestModule::class, InteractorModule::class))
+@Component(modules = [MockNetworkModule::class, AndroidTestModule::class, InteractorModule::class])
 interface AndroidTestComponent : KotifyDemoApplicationComponent

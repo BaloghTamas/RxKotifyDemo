@@ -11,7 +11,7 @@ open class EspressoTest<T : Activity>(activityClass: Class<T>) {
 
     @Rule @JvmField
     val activityRule: IntentsTestRule<T> = IntentsTestRule(activityClass, false, false)
-    protected var context: Context
+    private var context: Context
 
     init {
 

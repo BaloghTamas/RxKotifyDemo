@@ -18,8 +18,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ArtistAndroidTest : EspressoTest<ArtistsActivity>(ArtistsActivity::class.java) {
 
-    val ARTIST = "AC/DC"
-
     @Before fun setUp() {
         setTestInjector()
         activityRule.launchActivity(Intent().putExtra(MainActivity.KEY_ARTIST, ARTIST))
@@ -30,6 +28,10 @@ class ArtistAndroidTest : EspressoTest<ArtistsActivity>(ArtistsActivity::class.j
         waitFor(2000) {
             onView(allOf(withId(hu.bme.aut.android.kotifydemo.R.id.tvName), withText(ARTIST))).check(matches(isDisplayed()))
         }
+    }
+
+    companion object {
+        private const val ARTIST = "AC/DC"
     }
 
 

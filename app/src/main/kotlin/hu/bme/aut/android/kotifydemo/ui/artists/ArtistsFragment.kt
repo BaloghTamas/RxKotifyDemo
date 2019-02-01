@@ -7,50 +7,31 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import hu.bme.aut.android.kotifydemo.R
 import hu.bme.aut.android.kotifydemo.injector
 import hu.bme.aut.android.kotifydemo.model.Item
 import hu.bme.aut.android.kotifydemo.ui.utils.hide
 import hu.bme.aut.android.kotifydemo.ui.utils.show
-import hu.bme.aut.android.kotifydemo.ui.utils.showLongToast
 import kotlinx.android.synthetic.main.fragment_artists.*
 import javax.inject.Inject
 
 class ArtistsFragment : Fragment(), ArtistsScreen {
 
-    val artistsList: MutableList<Item> = mutableListOf()
-    var artistsAdapter: ArtistsAdapter? = null
-    var artist = "queen"
+    private val displayedArtists: MutableList<Item> = mutableListOf()
+    private var artistsAdapter: ArtistsAdapter? = null
+    private val artist by lazy { arguments!!.getString(KEY_ARTIST)!! }
+    private var selectedArtist: String? = null
 
     @Inject
     lateinit var artistsPresenter: ArtistsPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        artist = arguments?.getString(KEY_ARTIST) ?: ""
-
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
         artistsPresenter.attachScreen(this)
     }
-
-
-    companion object {
-        val KEY_ARTIST = "KEY_ARTIST"
-
-        fun newInstance(artist: String): ArtistsFragment {
-            val fragment = ArtistsFragment()
-            val bundle = Bundle()
-
-            bundle.putString(KEY_ARTIST, artist)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
 
     override fun onDetach() {
         artistsPresenter.detachScreen()
@@ -64,34 +45,35 @@ class ArtistsFragment : Fragment(), ArtistsScreen {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etArtist.setText(artist)
+        selectedArtist = artist
+        etArtist.setText(selectedArtist!!)
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerViewArtists.layoutManager = llm
 
-        artistsAdapter = ArtistsAdapter(context!!, artistsList)
+        artistsAdapter = ArtistsAdapter(context!!, displayedArtists)
         recyclerViewArtists.adapter = artistsAdapter
 
         swipeRefreshLayoutArtists.setOnRefreshListener {
-            artist = etArtist.text.toString()
-            artistsPresenter.refreshArtists(artist)
+            selectedArtist = etArtist.text.toString()
+            artistsPresenter.refreshArtists(selectedArtist!!)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        artistsPresenter.refreshArtists(artist)
+        artistsPresenter.refreshArtists(selectedArtist!!)
     }
 
-    override fun showArtists(artists: MutableList<Item>?) {
+    override fun showArtists(artists: List<Item>?) {
         swipeRefreshLayoutArtists.isRefreshing = false
-        artistsList.clear()
+        displayedArtists.clear()
         if (artists != null) {
-            artistsList.addAll(artists)
+            displayedArtists.addAll(artists)
         }
         artistsAdapter?.notifyDataSetChanged()
 
-        if (artistsList.isEmpty()) {
+        if (displayedArtists.isEmpty()) {
             recyclerViewArtists.hide()
             tvEmpty.show()
         } else {
@@ -103,6 +85,19 @@ class ArtistsFragment : Fragment(), ArtistsScreen {
 
     override fun showNetworkError(errorMsg: String) {
         swipeRefreshLayoutArtists.isRefreshing = false
-        activity?.showLongToast(errorMsg)
+        Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+    }
+
+    companion object {
+        private const val KEY_ARTIST = "KEY_ARTIST"
+
+        fun newInstance(artist: String): ArtistsFragment {
+            val fragment = ArtistsFragment()
+            val bundle = Bundle()
+
+            bundle.putString(KEY_ARTIST, artist)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

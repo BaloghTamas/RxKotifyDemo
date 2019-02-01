@@ -1,7 +1,5 @@
 package hu.bme.aut.android.kotifydemo.ui.artists
 
-import hu.bme.aut.android.kotifydemo.di.Network
-import hu.bme.aut.android.kotifydemo.injector
 import hu.bme.aut.android.kotifydemo.interactor.artists.ArtistsInteractor
 import hu.bme.aut.android.kotifydemo.interactor.artists.event.GetArtistsEvent
 import hu.bme.aut.android.kotifydemo.model.Item
@@ -12,17 +10,10 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-class ArtistsPresenter : Presenter<ArtistsScreen>() {
-
-    @Inject @Network
-    lateinit var networkExecutor: Executor
-
-    @Inject
-    lateinit var artistsInteractor: ArtistsInteractor
+class ArtistsPresenter @Inject constructor(private val executor: Executor, private val artistsInteractor: ArtistsInteractor) : Presenter<ArtistsScreen>() {
 
     override fun attachScreen(screen: ArtistsScreen) {
         super.attachScreen(screen)
-        injector.inject(this)
         EventBus.getDefault().register(this)
     }
 
@@ -32,7 +23,7 @@ class ArtistsPresenter : Presenter<ArtistsScreen>() {
     }
 
     fun refreshArtists(artistQuery: String) {
-        networkExecutor.execute {
+        executor.execute {
             artistsInteractor.getArtists(artistQuery)
         }
     }

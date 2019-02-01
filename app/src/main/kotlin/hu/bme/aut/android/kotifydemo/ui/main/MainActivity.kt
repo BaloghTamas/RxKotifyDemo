@@ -1,11 +1,11 @@
 package hu.bme.aut.android.kotifydemo.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import hu.bme.aut.android.kotifydemo.R
 import hu.bme.aut.android.kotifydemo.injector
 import hu.bme.aut.android.kotifydemo.ui.artists.ArtistsActivity
-import hu.bme.aut.android.kotifydemo.ui.utils.Intent
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity(), MainScreen {
     }
 
     override fun showArtists(artistSearchTerm: String) {
-        val intent = Intent<ArtistsActivity>(this)
+        val intent = Intent(this, ArtistsActivity::class.java)
         intent.putExtra(KEY_ARTIST, artistSearchTerm)
         startActivity(intent)
     }
 
     companion object {
-        val KEY_ARTIST = "KEY_ARTIST"
+        const val KEY_ARTIST = "KEY_ARTIST"
     }
 }

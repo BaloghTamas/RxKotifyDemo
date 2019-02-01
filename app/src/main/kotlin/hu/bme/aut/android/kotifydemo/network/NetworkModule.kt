@@ -2,7 +2,6 @@ package hu.bme.aut.android.kotifydemo.network
 
 import dagger.Module
 import dagger.Provides
-import hu.bme.aut.android.kotifydemo.ui.utils.create
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -30,9 +29,7 @@ class NetworkModule {
                 .baseUrl(NetworkConfig.TOKEN_ENDPOINT_ADDRESS)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-
-
-        return retrofit.create<TokenApi>()
+        return retrofit.create(TokenApi::class.java)
     }
 
     @Provides
@@ -43,8 +40,6 @@ class NetworkModule {
                 .baseUrl(NetworkConfig.API_ENDPOINT_ADDRESS)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-
-
-        return retrofit.create<ArtistsApi>()
+        return retrofit.create(ArtistsApi::class.java)
     }
 }

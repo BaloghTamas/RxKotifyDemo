@@ -10,7 +10,6 @@ import javax.inject.Inject
 class ArtistsInteractor @Inject constructor(private var artistsApi: ArtistsApi, private var tokenApi: TokenApi) {
 
     fun getArtists(artistQuery: String) {
-
         val tokenQueryCall = tokenApi.getToken()
         val event = GetArtistsEvent()
 

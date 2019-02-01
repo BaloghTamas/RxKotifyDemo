@@ -8,7 +8,8 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface TokenApi {
-    @POST("token") @FormUrlEncoded
+    @POST("token")
+    @FormUrlEncoded
     fun getToken(@Field("grant_type") granType: String = "client_credentials",
                  @Header("Authorization") type: String = "Basic MDM0MjY2ODU0OTI1NGZkOWFiMzdmMzNlZjRkNjRkYjA6ODM1MWFiMjVjYzVmNDBhMjg5OGI5N2U5ZjQyMmNkMDk="): Call<Token>
 }
