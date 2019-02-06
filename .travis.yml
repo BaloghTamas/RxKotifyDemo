@@ -12,7 +12,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-28
-    - sys-img-x86_64-google_apis-28
+    - sys-img-x86-google_apis-28
 
 env:
   global:
