@@ -12,7 +12,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-28
-    - sys-img-armeabi-v7a-google_apis-28
+    - sys-img-x86_64-google_apis-android-28
 
 env:
   global:
@@ -26,7 +26,7 @@ before_install:
 
 before_script:
   # Create and start emulator
-  - echo no | android create avd --force -n test -t android-28 -s "768x1280"
+  - echo no | android create avd --force -n test -abi x86_64 -t android-28 -s "768x1280"
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emualtor
   - adb shell input keyevent 82 &
