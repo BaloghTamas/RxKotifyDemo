@@ -1,35 +1,32 @@
 package hu.bme.aut.android.kotifydemo.interactor.artists
 
-import android.util.Log
-import hu.bme.aut.android.kotifydemo.interactor.artists.event.GetArtistsEvent
+import hu.bme.aut.android.kotifydemo.model.ArtistsResult
+import hu.bme.aut.android.kotifydemo.model.Item
 import hu.bme.aut.android.kotifydemo.network.ArtistsApi
 import hu.bme.aut.android.kotifydemo.network.TokenApi
-import org.greenrobot.eventbus.EventBus
+import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 class ArtistsInteractor @Inject constructor(private var artistsApi: ArtistsApi, private var tokenApi: TokenApi) {
 
-    fun getArtists(artistQuery: String) {
-        val tokenQueryCall = tokenApi.getToken()
-        val event = GetArtistsEvent()
+    fun getArtists(artistQuery: String): List<Item> {
+
+        val tokenCall = tokenApi.getToken("client_credentials", "Basic MDM0MjY2ODU0OTI1NGZkOWFiMzdmMzNlZjRkNjRkYjA6ODM1MWFiMjVjYzVmNDBhMjg5OGI5N2U5ZjQyMmNkMDk=")
 
         try {
-            val token = tokenQueryCall.execute().body()
-
-
-            val artistsQueryCall = artistsApi.getArtists("Bearer " + token?.token, artistQuery, "artist", 0, 3)
-
-            val response = artistsQueryCall.execute()
-            Log.d("Reponse", response.body().toString())
+            val token = tokenCall.execute().body()
+            val artistsQueryCall = artistsApi.getArtists("Bearer " + token!!.token, artistQuery, "artist", 0, 3)
+            val response: Response<ArtistsResult>
+            response = artistsQueryCall.execute()
             if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+                throw RuntimeException("Result code is not 200")
             }
-            event.code = response.code()
-            event.artists = response.body()?.artists?.items
-            EventBus.getDefault().post(event)
-        } catch (e: Exception) {
-            event.throwable = e
-            EventBus.getDefault().post(event)
+            return response.body()!!.artists!!.items!!
+        } catch (e: IOException) {
+            e.printStackTrace()
+            throw RuntimeException(e)
         }
+
     }
 }

@@ -70,7 +70,10 @@ dependencies {
     implementation toolkitDependencies.retrofitGsonConverter
     implementation toolkitDependencies.gson
     implementation toolkitDependencies.glide
-    implementation toolkitDependencies.eventbus
+
+    implementation rxDependencies.rxJava
+    implementation rxDependencies.rxAndroid
+    implementation rxDependencies.rxKotlin
 
     implementation daggerDependencies.dagger
     kapt daggerDependencies.compiler
